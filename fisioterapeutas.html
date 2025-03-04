@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisio-net - Fisioterapeutas</title>
+    <style>
+        :root {
+            --primary: #2c7be5;
+            --secondary: #6e84a3;
+            --success: #00d97e;
+            --danger: #e63757;
+            --warning: #f6c343;
+            --info: #39afd1;
+            --light: #f9fbfd;
+            --dark: #12263f;
+            --white: #fff;
+            --border-color: #edf2f9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fbfd;
+            color: #12263f;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--white);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 0.5rem;
+            font-size: 1.75rem;
+        }
+        
+        .menu {
+            list-style: none;
+        }
+        
+        .menu-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .menu-link:hover,
+        .menu-link.active {
+            background-color: rgba(44, 123, 229, 0.1);
+            color: var(--primary);
+        }
+        
+        .menu-icon {
+            margin-right: 0.75rem;
+        }
+        
+        /* Main Content */
+        .main {
+            padding: 1.5rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 0.75rem;
+        }
+        
+        /* Therapist Card */
+        .therapist-card {
+            background-color: var(--white);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .therapist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        
+        .therapist-name-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .therapist-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+        
+        .therapist-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .therapist-specialty {
+            color: var(--secondary);
+            font-size: 0.875rem;
+        }
+        
+        .therapist-status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .status-active {
+            background-color: rgba(0, 217, 126, 0.1);
+            color: var(--success);
+        }
+        
+        .status-inactive {
+            background-color: rgba(230, 55, 87, 0.1);
+            color: var(--danger);
+        }
+        
+        .therapist-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .info-group {
+            margin-bottom: 1rem;
+        }
+        
+        .info-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .info-value {
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #1a68d1;
+        }
+        
+        .btn-icon {
+            margin-right: 0.5rem;
+        }
+        
+        .therapist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🔄</span>
+                <span>Fisio-net</span>
+            </div>
+            
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="index.html" class="menu-link">
+                        <span class="menu-icon">🏠</span>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="fisioterapeutas.html" class="menu-link active">
+                        <span class="menu-icon">👨‍⚕️</span>
+                        <span>Fisioterapeutas</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">📊</span>
+                        <span>Estadísticas</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span class="menu-icon">⚙️</span>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main">
+            <div class="header">
+                <h1 class="page-title">Fisioterapeutas</h1>
+                
+                <div class="user-profile">
+                    <div class="avatar">A</div>
+                    <span>Admin</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <div>
+                    <input type="text" placeholder="Buscar fisioterapeuta..." style="padding: 0.5rem; border-radius: 0.375rem; border: 1px solid var(--border-color); width: 300px;">
+                </div>
+                <button class="btn btn-primary">
+                    <span class="btn-icon">➕</span>
+                    <span>Nuevo Fisioterapeuta</span>
+                </button>
+            </div>
+            
+            <div class="therapist-grid">
+                <!-- Fisioterapeuta 1 -->
+                <div class="therapist-card">
+                    <div class="therapist-header">
+                        <div class="therapist-name-container">
+                            <div class="therapist-avatar">AL</div>
+                            <div>
+                                <div class="therapist-name">Ana López</div>
+                                <div class="therapist-specialty">Neurología</div>
+                            </div>
+                        </div>
+                        <div class="therapist-status-badge status-active">Activo</div>
+                    </div>
+                    
+                    <div class="therapist-info-grid">
+                        <div class="info-group">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">ana.lopez@fisio-net.com</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Teléfono</span>
+                            <span class="info-value">+34 612 345 678</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Especialidad</span>
+                            <span class="info-value">Neurología</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Pacientes Activos</span>
+                            <span class="info-value">15</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                        <button class="btn btn-primary">Ver Perfil</button>
+                    </div>
+                </div>
+                
+                <!-- Fisioterapeuta 2 -->
+                <div class="therapist-card">
+                    <div class="therapist-header">
+                        <div class="therapist-name-container">
+                            <div class="therapist-avatar">CR</div>
+                            <div>
+                                <div class="therapist-name">Carlos Rodríguez</div>
+                                <div class="therapist-specialty">Traumatología</div>
+                            </div>
+                        </div>
+                        <div class="therapist-status-badge status-active">Activo</div>
+                    </div>
+                    
+                    <div class="therapist-info-grid">
+                        <div class="info-group">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">carlos.rodriguez@fisio-net.com</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Teléfono</span>
+                            <span class="info-value">+34 623 456 789</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Especialidad</span>
+                            <span class="info-value">Traumatología</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Pacientes Activos</span>
+                            <span class="info-value">12</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                        <button class="btn btn-primary">Ver Perfil</button>
+                    </div>
+                </div>
+                
+                <!-- Fisioterapeuta 3 -->
+                <div class="therapist-card">
+                    <div class="therapist-header">
+                        <div class="therapist-name-container">
+                            <div class="therapist-avatar">MG</div>
+                            <div>
+                                <div class="therapist-name">María García</div>
+                                <div class="therapist-specialty">Geriatría</div>
+                            </div>
+                        </div>
+                        <div class="therapist-status-badge status-inactive">Inactivo</div>
+                    </div>
+                    
+                    <div class="therapist-info-grid">
+                        <div class="info-group">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">maria.garcia@fisio-net.com</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Teléfono</span>
+                            <span class="info-value">+34 634 567 890</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Especialidad</span>
+                            <span class="info-value">Geriatría</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Pacientes Activos</span>
+                            <span class="info-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                        <button class="btn btn-primary">Ver Perfil</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+Ahora necesito actualizar el archivo index.html para agregar un enlace a la página de fisioterapeutas.
+
+Analyzed
+
+index.html:(446-
